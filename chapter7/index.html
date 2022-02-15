@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>My Photos</title>
+</head>
+<body>
+<header>
+  <h1>My photos</h1>
+</header>
+
+<div class="container">
+  <div id="img_unit">
+    <!--jsで画像一覧を表示-->
+  </div>
+</div>
+</div>
+
+<script>
+  let ajax = new XMLHttpRequest();
+
+  //ajax 非同期で行う通信の実行
+  //送信先　レスポンスの型　送信パラメータを指定
+  ajax.open('GET','https://h2o-space.com/htmlbook/images.php');
+  ajax.responseType = 'json';
+  ajax.send(null);
+
+  //readyState = Ajaxの通信ステータスが現れる
+  ajax.onreadystatechange = function(){
+
+    //XMLHttpRequest.DONE === 4 通信完了
+    //status === 200 HTTP StatusCode正常レスポンス
+    if(ajax.readyState ===XMLHttpRequest.DONE && ajax.status === 200){
+
+      //responseのjsonから値を取り出してhtmlに出力
+      for(let i=0; i<this.response.length; i++){
+
+
+        img = document.createElement('img');
+        img.setAttribute('src',this.response[i].path);
+
+        caption = document.createElement('div');
+        caption.className = 'inner'
+        caption.innerHTML = '<p>'+this.response[i].caption+
+          '<span>'+this.response[i].name+'</span></p>';
+
+        div = document.createElement('div');
+        div.className = 'photo';
+
+        // 子要素を追加
+        div.appendChild(img);
+        div.appendChild(caption);
+
+        //IDを指定して要素を追加する
+        document.getElementById('img_unit').appendChild(div);
+
+      }
+    }
+  };
+</script>
+</body>
+</html>

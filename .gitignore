@@ -1,0 +1,10 @@
+HELP.md
+*.log
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+out.*
